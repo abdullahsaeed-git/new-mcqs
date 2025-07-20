@@ -58,11 +58,11 @@ export default function ContestantPerformance() {
     const password = params.get("pass");
     setPassword(password);
 
-    fetch("/assets/data/db.json")
+    fetch("https://api.jsonbin.io/v3/qs/687d36a1a44e931a19760d6a")
       .then((res) => res.json())
       .then((data) => {
-        console.log("Loaded DB data:", data);
-        setdb(data);
+        console.log("Loaded DB data:", data.record);
+        setdb(data.record);
       })
       .catch((error) => console.error("Error loading db.json:", error));
   }, [search]);
@@ -72,6 +72,7 @@ export default function ContestantPerformance() {
 
     const found = db.users.find((u) => u.username === contestantName);
     setUser(found);
+    console.log("found user:  " , found)
     setLoading(false);
   }, [db, contestantName]);
 

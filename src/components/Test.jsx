@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Loading from "./Loading";
+import TestSubmission from "./TestSubmission";
 
 function Test() {
-  const [db, setdb] = useState(null)
+  const [db, setdb] = useState(null);
   const { contestantName } = useParams();
   const { search } = useLocation();
   const navigate = useNavigate();
@@ -12,36 +13,15 @@ function Test() {
   const [test, setTest] = useState(null);
   const [loading, setLoading] = useState(true);
   const [mcqs, setMcqs] = useState([]);
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(null);
   const [submitted, setSubmitted] = useState(false);
   const [submittingTest, setSubmittingTest] = useState(true);
   const TotalTime = 0.5; //Minutes
-  const [timeLeft , setTimeLeft ] = useState(TotalTime*60)
+  const [timeLeft, setTimeLeft] = useState(TotalTime * 60);
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [currentmcq, setCurrentmcq] = useState(0);
-  const [showTimeAlert , setShowTimeAlert] = useState(false)
+  const [showTimeAlert, setShowTimeAlert] = useState(false);
   // const [mcqsAnswers, setMcqsAnswers] = useState([]);
-
-useEffect(() => {
-if(timeLeft <= 0){
-  handleSumbitTest();
-  return;
-}
-if(timeLeft <= 15){
-  setShowTimeAlert(true);
-}
-const timer = setInterval(() => {
-  setTimeLeft((prevTime) => prevTime-1)
-}, 1000);
-return ( ) => clearInterval(timer)
-}, [timeLeft])
-
-
-const formatTime  = (seconds) => {
-  const min = Math.floor(seconds / 60);
-  const sec = Math.floor(seconds % 60);
-  return `${String(min).padStart(2,0)}:${String(sec).padStart(2,0)}`
-}
 
   // Track selected option for the current MCQ
 
@@ -50,14 +30,12 @@ const formatTime  = (seconds) => {
   //   const testId = params.get("testId");
   //   const Password = params.get("pass");
   //   setTimeout(() => {
-      
+
   //   }, 500);
 
   // }, [search]);
 
-  
   useEffect(() => {
-
     fetch("/assets/data/db.json")
       .then((res) => res.json())
       .then((data) => {
@@ -94,7 +72,7 @@ const formatTime  = (seconds) => {
     setLoading(false);
   }, [db, contestantName]);
 
-  const userTestHistory = user?.testHistory.find(t => t.testId === test.id)
+  const userTestHistory = user?.testHistory.find((t) => t.testId === test.id);
   // console.log(userTestHistory)
 
   useEffect(() => {
@@ -102,74 +80,90 @@ const formatTime  = (seconds) => {
   }, [mcqs]);
 
   let [correctAnswers, setCorrectAnswers] = useState(0);
-const [answered, setAnswered] = useState({})
+  const [answered, setAnswered] = useState({});
 
   const handleOptionSelect = (option, index) => {
     const updated = [...selectedOptions];
     updated[currentmcq] = option;
     setSelectedOptions(updated);
-    
+
     // Prevent multiple answers for the same question
     if (answered[currentmcq]) return;
     // console.log(answered)
 
-    
     // Mark the question as answered
-    
+
     if (mcqs[currentmcq].answer === option) {
       // setCorrectAnswers(correctAnswers + 1);
       setAnswered((prev) => ({ ...prev, [currentmcq]: true }));
     }
   };
 
+  useEffect(() => {
+    if (userTestHistory?.status === "submitted") return;
+    if (timeLeft <= 0) {
+      handleSumbitTest();
+      return;
+    }
+    if (timeLeft <= 15) {
+      setShowTimeAlert(true);
+    }
+    const timer = setInterval(() => {
+      setTimeLeft((prevTime) => prevTime - 1);
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [timeLeft]);
+
+  const formatTime = (seconds) => {
+    if (userTestHistory?.status === "submitted") return;
+    const min = Math.floor(seconds / 60);
+    const sec = Math.floor(seconds % 60);
+    return `${String(min).padStart(2, 0)}:${String(sec).padStart(2, 0)}`;
+  };
 
   let mcqsAnswers = [];
   // console.log("fkdf ", contestant)
   userTestHistory?.status === "submitted"
     ? (mcqsAnswers = userTestHistory?.selectedAnswers)
     : (mcqsAnswers = selectedOptions);
-    // console.log(contestant)
-
+  // console.log(contestant)
 
   const handleSumbitTest = () => {
-    console.log("Submit is called")
-     setSubmitted(true);
+    console.log("Submit is called");
+    setSubmitted(true);
     let correctCount = 0;
-  for (let i = 0; i < mcqs.length; i++) {
-    if( mcqs[i].answer === selectedOptions[i] ){
-      // console.log(`${i}: is correct , ${mcqs[i].answer} === ${selectedOptions[i]}`);
-      correctCount++;
-    // console.log("Now correct answers are: ", correctCount);
-   }else{
-    //  console.log(
-    //    `${i}: is wrong , ${mcqs[i].answer} != ${selectedOptions[i]}`
-    //  );
-   }
-  }
-  setCorrectAnswers(correctCount);
-  // console.log("Latest", correctCount)
+    for (let i = 0; i < mcqs.length; i++) {
+      if (mcqs[i].answer === selectedOptions[i]) {
+        // console.log(`${i}: is correct , ${mcqs[i].answer} === ${selectedOptions[i]}`);
+        correctCount++;
+        // console.log("Now correct answers are: ", correctCount);
+      } else {
+        //  console.log(
+        //    `${i}: is wrong , ${mcqs[i].answer} != ${selectedOptions[i]}`
+        //  );
+      }
+    }
+    setCorrectAnswers(correctCount);
+    // console.log("Latest", correctCount)
 
-  //  let selectionString = JSON.stringify(selectedOptions);
-  //  console.log(selectionString)
-  //  console.log(`Only ${correctAnswers} answers are correct`),
-  //  console.log("contestant.status = submitted ")
-
+    //  let selectionString = JSON.stringify(selectedOptions);
+    //  console.log(selectionString)
+    //  console.log(`Only ${correctAnswers} answers are correct`),
+    //  console.log("contestant.status = submitted ")
   };
-useEffect(() => {
-  if (submitted) {
-    // console.log("Submitted is true. Starting timeout...");
+  useEffect(() => {
+    if (submitted) {
+      // console.log("Submitted is true. Starting timeout...");
 
-    const timeoutId = setTimeout(() => {
-      setSubmittingTest(false);
-    }, 4000);
+      const timeoutId = setTimeout(() => {
+        setSubmittingTest(false);
+      }, 2000);
 
-    return () => clearTimeout(timeoutId); // cleanup if submitted changes again quickly
-  }
-}, [submitted])
+      return () => clearTimeout(timeoutId); // cleanup if submitted changes again quickly
+    }
+  }, [submitted]);
   // console.log("Contestant:", contestant);
 
-
-  
   if (loading) return <Loading />;
 
   if (!authorized) {
@@ -188,74 +182,12 @@ useEffect(() => {
     );
   }
 
-
-
-
   if (submitted) {
     return (
-      <div
-        className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
-        style={{ background: "rgba(0,0,0,0.7)", zIndex: 9999 }}
-      >
-        <div
-          className="bg-dark text-light py-3 px-3 rounded-4 shadow-lg "
-          style={{ minWidth: "80vw", maxWidth: "90vw", textAlign: "left" }}
-        >
-          <h1
-            className="h3 my-2 mx-1 text-center mb-4 "
-            style={{ color: "#00d8ff" }}
-          >
-            {submittingTest ? "Test Submission" : "Congratulations!!"}
-          </h1>
-          <ul
-            style={{
-              maxHeight: "70vh",
-              height: "",
-              overflowY: "scroll",
-              scrollbarWidth: "none",
-            }}
-            className="list-group list-group-flush "
-          >
-            {submittingTest ? (
-              <>
-                <li className="list-group-item h4">
-                  <Loading />
-                </li>
-                <li className="list-group-item h4">
-                  Your Test is getting submitted.
-                </li>
-                <li className="list-group-item h6">Please Wait...</li>
-              </>
-            ) : (
-              <>
-                <li className="list-group-item h4 text-center">
-                 You have got {correctAnswers} Answers accurate.
-                </li>
-                <li className="list-group-item h6">
-                  Rewards Wil be announced within 24 hours.
-                </li>
-                <li className="list-group-item ">
-                  Note! <br />
-                  Your Test details will be sent you via Email , as soon as possible <br /> Anyways
-                  <span style={{ color: "#00d8ff" , fontSize: '1.1rem' , fontWeight: 'bold'}}>
-                    &nbsp; Learn More  
-                  </span>
-                   &nbsp; so you can
-                  <span style={{ color: "#00d8ff" , fontSize: '1.1rem' , fontWeight: 'bold'}}>
-                    &nbsp;  Earn More.
-                  </span>
-                </li>
-              </>
-            )}
-          </ul>
-        {/* { !submittingTest && <button
-            className="btn btn-outline-info w-100 mt-3"
-            onClick={() => navigate('/')}
-          >
-            Close
-          </button>} */}
-        </div>
-      </div>
+      <TestSubmission
+        submittingTest={submittingTest}
+        correctAnswers={correctAnswers}
+      />
     );
   }
 
@@ -535,7 +467,17 @@ useEffect(() => {
               className="btn new-btn-success px-4 py-2 w-100"
               onClick={() => currentmcq > 0 && setCurrentmcq(currentmcq - 1)}
             >
-              {formatTime(timeLeft)}
+
+              {userTestHistory?.status === "submitted" ? (
+                <>
+                Correct:
+                <span className="fw-bold mx-2">
+                  {mcqs[currentmcq]?.answer}
+                </span>
+                </>
+              ) : (
+                formatTime(timeLeft)
+              )}
             </button>
             <button
               className="btn btn-outline-info px-4 py-2"
