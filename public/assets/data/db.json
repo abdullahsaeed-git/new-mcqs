@@ -616,7 +616,7 @@
           "testId": "t-1",
           "date": "2025-07-01",
           "score": 2,
-          "status": "submitted",
+          "status": "pending",
           "language": "Java",
           "selectedAnswers": [
             "15",
