@@ -727,7 +727,7 @@
           "testId": "t-3",
           "date": "2025-07-15",
           "score": 9,
-          "status": "pending",
+          "status": "submitted",
           "language": "Javascript",
           "selectedAnswers": [
             "5",
