@@ -310,17 +310,84 @@
 
 // Updated TestDetails.jsx with auto-rank calculation based on score
 import { useLocation, useNavigate } from "react-router-dom";
-import db from "../data/db.json";
+
 import Loading from "./Loading";
 import { useState, useEffect } from "react";
 
 export default function TestDetails() {
+  const[db, setdb] = useState(null)
   const { search } = useLocation();
   const navigate = useNavigate();
   const [test, setTest] = useState(null);
   const [loading, setLoading] = useState(true);
   const [adminPass, setAdminPass] = useState("");
   const [users, setUsers] = useState([]);
+
+
+  
+  useEffect(() => {
+    fetch("/assets/data/db.json")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Loaded DB data:", data);
+        setdb(data);
+      })
+      .catch((error) => console.error("Error loading db.json:", error));
+  }, [search]);
+ useEffect(() => {
+    if (!db) return;
+
+     const params = new URLSearchParams(search);
+     const testId = params.get("testId");
+     const pass = params.get("pass");
+     setAdminPass(pass);
+
+       const foundTest = db.tests.find((t) => t.id === testId);
+       setTest(foundTest);
+
+       if (!foundTest) return;
+
+       const matchedUsers = db.users.filter((user) =>
+         foundTest.contestants.some((c) => c.name === user.username)
+       );
+
+       // Filter submitted tests and sort by score
+       const submittedUsers = matchedUsers
+         .map((user) => {
+           const testRecord = user.testHistory.find((t) => t.testId === testId);
+           return testRecord && testRecord.status === "submitted"
+             ? { ...user, testRecord }
+             : null;
+         })
+         .filter(Boolean)
+         .sort((a, b) => b.testRecord.score - a.testRecord.score);
+
+       // Assign ranks based on sorted scores
+       let currentRank = 1;
+       let previousScore = null;
+       let actualRank = 1;
+
+       for (let i = 0; i < submittedUsers.length; i++) {
+         const user = submittedUsers[i];
+         const score = user.testRecord.score;
+
+         if (score !== previousScore) {
+           actualRank = currentRank;
+         }
+
+         // Update user's testHistory with new rank
+         const testIndex = user.testHistory.findIndex(
+           (t) => t.testId === testId
+         );
+         user.testHistory[testIndex].rank = actualRank;
+
+         previousScore = score;
+         currentRank++;
+       }
+
+       setUsers(submittedUsers);
+       setLoading(false);
+  }, [db]);
 
   useEffect(() => {
     const params = new URLSearchParams(search);
@@ -329,49 +396,7 @@ export default function TestDetails() {
     setAdminPass(pass);
 
     setTimeout(() => {
-      const foundTest = db.tests.find((t) => t.id === testId);
-      setTest(foundTest);
-
-      if (!foundTest) return;
-
-      const matchedUsers = db.users.filter((user) =>
-        foundTest.contestants.some((c) => c.name === user.username)
-      );
-
-      // Filter submitted tests and sort by score
-      const submittedUsers = matchedUsers
-        .map((user) => {
-          const testRecord = user.testHistory.find((t) => t.testId === testId);
-          return testRecord && testRecord.status === "submitted"
-            ? { ...user, testRecord }
-            : null;
-        })
-        .filter(Boolean)
-        .sort((a, b) => b.testRecord.score - a.testRecord.score);
-
-      // Assign ranks based on sorted scores
-      let currentRank = 1;
-      let previousScore = null;
-      let actualRank = 1;
-
-      for (let i = 0; i < submittedUsers.length; i++) {
-        const user = submittedUsers[i];
-        const score = user.testRecord.score;
-
-        if (score !== previousScore) {
-          actualRank = currentRank;
-        }
-
-        // Update user's testHistory with new rank
-        const testIndex = user.testHistory.findIndex((t) => t.testId === testId);
-        user.testHistory[testIndex].rank = actualRank;
-
-        previousScore = score;
-        currentRank++;
-      }
-
-      setUsers(submittedUsers);
-      setLoading(false);
+    
     }, 500);
   }, [search]);
 

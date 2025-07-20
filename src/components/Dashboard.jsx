@@ -1,23 +1,44 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import db from "../data/db.json";
+import { useLocation, useNavigate } from "react-router-dom";
 import Loading from "./Loading";
 import { FaPlusCircle } from "react-icons/fa";
 
 export default function Dashboard() {
+
+  const [db, setdb] = useState(null)
   const [loading, setLoading] = useState(true);
   const [tests, setTests] = useState([]);
   const [showAdd, setShowAdd] = useState(false);
   const [newTestDate, setNewTestDate] = useState("");
   const [newTestName, setNewTestName] = useState("");
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
+  const { search } = useLocation();
+
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setTests(db.tests);
+  //     setLoading(false);
+  //   }, 500);
+  // }, []);
 
   useEffect(() => {
-    setTimeout(() => {
-      setTests(db.tests);
-      setLoading(false);
-    }, 500);
-  }, []);
+
+    fetch("/assets/data/db.json")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Loaded DB data:", data);
+        setdb(data);
+      })
+      .catch((error) => console.error("Error loading db.json:", error));
+  }, [search]);
+
+  useEffect(() => {
+    if (!db) return;
+
+    setTests(db.tests)
+    setLoading(false);
+  }, [db]);
 
   if (loading) return <Loading />;
 

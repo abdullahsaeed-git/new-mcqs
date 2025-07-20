@@ -1,9 +1,20 @@
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import db from "../data/db.json";
 import Loading from "./Loading";
 import { useState, useEffect } from "react";
 
 export default function ContestantPerformance() {
+  const [db, setdb] = useState(null);
+
+  // useEffect(() => {
+  //   fetch("/assets/data/db.json")
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       console.log("Loaded DB data:", data);
+  //       setdb(data);
+  //     })
+  //     .catch((error) => console.error("Error loading db.json:", error));
+  // }, []);
+
   const { contestantName } = useParams();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -21,16 +32,48 @@ export default function ContestantPerformance() {
   }, []);
   
 
+  // useEffect(() => {
+  //   const params = new URLSearchParams(search);
+  //   const password = params.get("pass");
+  //   setPassword(password);
+
+  //     fetch("/assets/data/db.json")
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         console.log("Loaded DB data:", data);
+  //         setdb(data);
+  //       })
+  //       .catch((error) => console.error("Error loading db.json:", error));
+
+  //   setTimeout(() => {
+  //     const found = db.users.find((u) => u.username === contestantName);
+  //     setUser(found);
+  //     setLoading(false);
+      
+  //   }, 500);
+  // }, [contestantName]);
+
   useEffect(() => {
     const params = new URLSearchParams(search);
     const password = params.get("pass");
     setPassword(password);
-    setTimeout(() => {
-      const found = db.users.find((u) => u.username === contestantName);
-      setUser(found);
-      setLoading(false);
-    }, 500);
-  }, [contestantName]);
+
+    fetch("/assets/data/db.json")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Loaded DB data:", data);
+        setdb(data);
+      })
+      .catch((error) => console.error("Error loading db.json:", error));
+  }, [search]);
+
+  useEffect(() => {
+    if (!db) return;
+
+    const found = db.users.find((u) => u.username === contestantName);
+    setUser(found);
+    setLoading(false);
+  }, [db, contestantName]);
 
   if (loading) return <Loading />;
   if (!user || user.password !== password)

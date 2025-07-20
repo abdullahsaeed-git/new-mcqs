@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import db from "../data/db.json";
 import Loading from "./Loading";
 
 function Test() {
+  const [db, setdb] = useState(null)
   const { contestantName } = useParams();
   const { search } = useLocation();
   const navigate = useNavigate();
@@ -45,31 +45,54 @@ const formatTime  = (seconds) => {
 
   // Track selected option for the current MCQ
 
+  // useEffect(() => {
+  //   const params = new URLSearchParams(search);
+  //   const testId = params.get("testId");
+  //   const Password = params.get("pass");
+  //   setTimeout(() => {
+      
+  //   }, 500);
+
+  // }, [search]);
+
+  
   useEffect(() => {
+
+    fetch("/assets/data/db.json")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Loaded DB data:", data);
+        setdb(data);
+      })
+      .catch((error) => console.error("Error loading db.json:", error));
+  }, [search]);
+
+  useEffect(() => {
+    if (!db) return;
+
     const params = new URLSearchParams(search);
     const testId = params.get("testId");
     const Password = params.get("pass");
-    setTimeout(() => {
-      const singleTest = db.tests.find((t) => t.id === testId);
-      setTest(singleTest);
+    const found = db.users.find((u) => u.username === contestantName);
+    setUser(found);
+    const singleTest = db.tests.find((t) => t.id === testId);
+    setTest(singleTest);
 
-      // console.log(testId, singleTest)
-      const singleContestant = singleTest?.contestants.find(
-        (c) => c.name === contestantName
-      );
-      setContestant(singleContestant);
-      // console.log(mcqs)
-      setMcqs(singleContestant.mcqs);
-      const user = db.users.find((u) => u.username === contestantName);
-      setUser(user)
-      if (user && user.password === Password) {
-        setAuthorized(true);
-      }
-      
-      setLoading(false);
-    }, 500);
+    // console.log(testId, singleTest)
+    const singleContestant = singleTest?.contestants.find(
+      (c) => c.name === contestantName
+    );
+    setContestant(singleContestant);
+    // console.log(mcqs)
+    setMcqs(singleContestant.mcqs);
+    const user = db.users.find((u) => u.username === contestantName);
+    setUser(user);
+    if (user && user.password === Password) {
+      setAuthorized(true);
+    }
 
-  }, [search]);
+    setLoading(false);
+  }, [db, contestantName]);
 
   const userTestHistory = user?.testHistory.find(t => t.testId === test.id)
   // console.log(userTestHistory)

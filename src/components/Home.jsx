@@ -1,46 +1,58 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import db from '../data/db.json'
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-
-
 export default function Home() {
+  const [db, setdb] = useState(null);
   const [showTerms, setShowTerms] = useState(false);
   const [newTestDate, setNewTestDate] = useState("");
   const [newTestName, setNewTestName] = useState("");
   const [userName, setUserName] = useState("");
   const navigate = useNavigate();
   const [error, setError] = useState(null);
-    const [viewPostHeight, setViewPortHeight] = useState(window.innerHeight);
-    const [viewPortWidth, setViewPortWidth] = useState(window.innerWidth);
-    const [isMobile, setIsMobile] = useState(false);
-    useEffect(() => {
-      if (viewPortWidth < 768) {
-        setIsMobile(true);
-      }
-        AOS.init();
-    }, []);
+  const [viewPostHeight, setViewPortHeight] = useState(window.innerHeight);
+  const [viewPortWidth, setViewPortWidth] = useState(window.innerWidth);
+  const [isMobile, setIsMobile] = useState(false);
+  const {search} = useLocation();
+  const [user, setUser] = useState(null)
+  
+  useEffect(() => {
+    if (viewPortWidth < 768) {
+      setIsMobile(true);
+    }
+    AOS.init();
+  }, []);
+
+  
+  
+  useEffect(() => {
+    fetch("/assets/data/db.json")
+    .then((res) => res.json())
+    .then((data) => {setdb(data); });
+  }, []);
+  
+useEffect(() => {
+  if (!db) return;
+  const user = db.users.find(
+    (u) => u.username.toLowerCase() === userName.trim().toLowerCase()
+  );
+  setUser(user);
+  // setLoading(false); // ← remove or define this if you need it
+}, [db, userName]);
+
 
   const handleLoginFormSubmit = (e) => {
     e.preventDefault();
-    const user = db.users.find((u) => u.username === userName)
-    if(user === undefined || user === null){
+    if (user === undefined || user === null) {
       // console.log(user, userName);
-      setError("User Not Found")
-
-    }else{
+      setError("User Not Found");
+    } else {
       navigate(`/${userName}/`);
-
     }
-    
   };
-  
-  
-  
-  
+
   return (
     <div
       className="min-vh-100 bg-dark text-light  rounded-5"
@@ -272,7 +284,7 @@ export default function Home() {
           >
             <div
               className="bg-dark text-light py-3 px-3 rounded-4 shadow-lg"
-              style={{ minWidth: '', maxWidth: '90vw', textAlign: "left" }}
+              style={{ minWidth: "", maxWidth: "90vw", textAlign: "left" }}
             >
               <h1 className="h3 my-2 mx-1 " style={{ color: "#00d8ff" }}>
                 Terms and Policy
@@ -281,7 +293,7 @@ export default function Home() {
                 style={{
                   maxHeight: "60vh",
                   overflowY: "scroll",
-                  maxWidth:'90vw',
+                  maxWidth: "90vw",
                   scrollbarWidth: "none",
                 }}
                 className="list-group list-group-flush "
