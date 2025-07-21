@@ -17,7 +17,7 @@ function Test() {
   const [user, setUser] = useState(null);
   const [submitted, setSubmitted] = useState(false);
   const [submittingTest, setSubmittingTest] = useState(false);
-  const TotalTime = 5; //Minutes
+  const TotalTime = 50; //Minutes
   const [timeLeft, setTimeLeft] = useState(TotalTime * 60);
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [currentmcq, setCurrentmcq] = useState(0);
@@ -57,11 +57,6 @@ function Test() {
     const params = new URLSearchParams(search);
     const testId = params.get("testId");
     const Password = params.get("pass");
-    const found = db.users.find(
-      (u) => u.username.toLowerCase() === contestantName.trim().toLowerCase()
-    );
-
-    setUser(found);
     const singleTest = db.tests.find((t) => t.id === testId);
     setTest(singleTest);
 
@@ -117,8 +112,11 @@ function Test() {
       submitConfirmedRef.current.click();
       return;
     }
-    if (timeLeft <= 15) {
+    if (timeLeft <= 600) {
       setShowTimeAlert(true);
+      setTimeout(() => {
+        setShowTimeAlert(false)
+      }, 10000);
     }
     const timer = setInterval(() => {
       setTimeLeft((prevTime) => prevTime - 1);
@@ -452,7 +450,7 @@ function Test() {
           <div className="row gy-4 mt-2 mb-5">
             {mcqs[currentmcq]?.options.map((option, index) => {
               const isSelected = mcqsAnswers[currentmcq] === option;
-              const isDisabled = contestant?.status === "submitted";
+              const isDisabled = userTestHistory?.status === "submitted";
 
               return (
                 <div
@@ -464,9 +462,11 @@ function Test() {
                 >
                   <div
                     className={`p-3 rounded border ${
-                      isSelected
-                        ? "border-info bg-dark text-info"
-                        : "bg-dark text-light"
+                      isSelected ? (
+                        mcqs[currentmcq]?.answer === userTestHistory?.selectedAnswers[index] ?
+                        "alert-success text-light" :
+                        "alert-danger text-light" 
+                      ): "bg-dark text-light"
                     } ${isDisabled ? "element-disabled" : "mcq-option"}`}
                     style={{ cursor: isDisabled ? "not-allowed" : "pointer" }}
                   >
@@ -481,21 +481,20 @@ function Test() {
           </div>
 
           <div className="btn-container mt-4 d-flex flex-column flex-md-row justify-content-center align-items-center gap-3">
+            {userTestHistory?.status != "submitted" && (
             <button
               className="btn new-btn-success px-4 py-2 w-100"
-              // onClick={() => currentmcq > 0 && setCurrentmcq(currentmcq - 1)}
-            >
-              {userTestHistory?.status === "submitted" ? (
-                <>
-                  Correct:
-                  <span className="fw-bold mx-2">
-                    {mcqs[currentmcq]?.answer}
-                  </span>
-                </>
-              ) : (
+              >
+              {/* //   <>
+              //     Correct:
+              //     <span className="fw-bold mx-2">
+              //       {mcqs[currentmcq]?.answer}
+              //     </span>
+              //   </>
+              // ) : ( */}
                 formatTime(timeLeft)
-              )}
             </button>
+              )}
             <button
               className="btn btn-outline-info px-4 py-2"
               onClick={() => currentmcq > 0 && setCurrentmcq(currentmcq - 1)}

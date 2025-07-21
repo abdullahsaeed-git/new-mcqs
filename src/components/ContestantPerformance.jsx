@@ -227,8 +227,10 @@ export default function ContestantPerformance() {
     // </div> */}
 
       <div className="container mt-5">
-        <h2 className="mb-4 text-white">Performance: {user.username}</h2>
-        {isMobile && (
+        <h2 className="mb-4 text-white">
+          Performance: {isMobile && <br />} <span className="fs-4 mt-3"> {user.username}</span>
+        </h2>
+        {isMobile && userTestArrayReverse.length != 0 && (
           <div
             className="performance-sort d-flex justify-content-center align-items-start"
             style={{ flexDirection: "column" }}
@@ -271,7 +273,7 @@ export default function ContestantPerformance() {
         )}
 
         {userTestArrayReverse.length === 0 ? (
-          <li className="list-group-item">No test history.</li>
+          <li className="list-group-item p-3">No tests Found.</li>
         ) : isMobile ? (
           // MOBILE VIEW
           <div className="row">

@@ -559,6 +559,460 @@
           ]
         }
       ]
+    },
+    {
+      "id": "t-4",
+      "date" : "22/7/2025",
+      "contestants": [
+        {
+          "name": "abdul-rehman-bin-auf-R.A",
+          "mcqs":[
+            {
+              "id": "mcq-1",
+              "question": "What keyword is used to declare a constant in Swift?",
+              "options": ["var", "let", "const", "final"],
+              "answer": "let",
+              "correct": null
+            },
+            {
+              "id": "mcq-2",
+              "question": "Which symbol is used to unwrap an optional in Swift?",
+              "options": ["?", "!", "*", "&"],
+              "answer": "!",
+              "correct": null
+            },
+            {
+              "id": "mcq-3",
+              "question": "What is the default access level in Swift?",
+              "options": ["private", "internal", "public", "open"],
+              "answer": "internal",
+              "correct": null
+            },
+            {
+              "id": "mcq-4",
+              "question": "Which of the following is not a valid Swift collection?",
+              "options": ["Array", "Set", "Dictionary", "Tuple"],
+              "answer": "Tuple",
+              "correct": null
+            },
+            {
+              "id": "mcq-5",
+              "question": "What is used for error handling in Swift?",
+              "options": [
+                "try/catch",
+                "throw/try/catch",
+                "try/except",
+                "raise/rescue"
+              ],
+              "answer": "throw/try/catch",
+              "correct": null
+            },
+            {
+              "id": "mcq-6",
+              "question": "Which keyword is used to define a function in Swift?",
+              "options": ["def", "function", "func", "fn"],
+              "answer": "func",
+              "correct": null
+            },
+            {
+              "id": "mcq-7",
+              "question": "How do you declare an optional String in Swift?",
+              "options": [
+                "String!",
+                "String?",
+                "Optional String",
+                "var String"
+              ],
+              "answer": "String?",
+              "correct": null
+            },
+            {
+              "id": "mcq-8",
+              "question": "Which of these is a correct way to declare a tuple?",
+              "options": [
+                "(Int, String)",
+                "[Int, String]",
+                "{Int, String}",
+                "<Int, String>"
+              ],
+              "answer": "(Int, String)",
+              "correct": null
+            },
+            {
+              "id": "mcq-9",
+              "question": "What function is used to print output to the console in Swift?",
+              "options": ["echo()", "console.log()", "println()", "print()"],
+              "answer": "print()",
+              "correct": null
+            },
+            {
+              "id": "mcq-10",
+              "question": "Which data type is used to represent true/false values?",
+              "options": ["Int", "Bool", "Binary", "Double"],
+              "answer": "Bool",
+              "correct": null
+            },
+            {
+              "id": "mcq-11",
+              "question": "What is type inference in Swift?",
+              "options": [
+                "Manual type declaration",
+                "Automatic type detection",
+                "Debugging tool",
+                "Error handling"
+              ],
+              "answer": "Automatic type detection",
+              "correct": null
+            },
+            {
+              "id": "mcq-12",
+              "question": "What is the file extension for Swift source files?",
+              "options": [".swift", ".sw", ".swiftlang", ".swf"],
+              "answer": ".swift",
+              "correct": null
+            },
+            {
+              "id": "mcq-13",
+              "question": "Which keyword is used to create a subclass?",
+              "options": ["inherits", "extends", "subclass", "class"],
+              "answer": "class",
+              "correct": null
+            },
+            {
+              "id": "mcq-14",
+              "question": "What is the return type of a function that returns nothing?",
+              "options": ["void", "nil", "Void", "Nothing"],
+              "answer": "Void",
+              "correct": null
+            },
+            {
+              "id": "mcq-15",
+              "question": "Which Swift structure can hold a sequence of values of the same type?",
+              "options": ["Array", "Tuple", "Dictionary", "Enum"],
+              "answer": "Array",
+              "correct": null
+            },
+            {
+              "id": "mcq-16",
+              "question": "Which statement is used to exit a loop early?",
+              "options": ["exit", "break", "stop", "continue"],
+              "answer": "break",
+              "correct": null
+            },
+            {
+              "id": "mcq-17",
+              "question": "What keyword is used to handle optional binding?",
+              "options": ["if let", "guard var", "while var", "do let"],
+              "answer": "if let",
+              "correct": null
+            },
+            {
+              "id": "mcq-18",
+              "question": "What does ARC stand for in Swift?",
+              "options": [
+                "Automatic Reference Counting",
+                "Auto Runtime Compiler",
+                "Access Reference Control",
+                "Apple Runtime Code"
+              ],
+              "answer": "Automatic Reference Counting",
+              "correct": null
+            },
+            {
+              "id": "mcq-19",
+              "question": "What is the purpose of 'guard' in Swift?",
+              "options": [
+                "Looping",
+                "Optional unwrapping",
+                "Memory management",
+                "Error throwing"
+              ],
+              "answer": "Optional unwrapping",
+              "correct": null
+            },
+            {
+              "id": "mcq-20",
+              "question": "Which symbol is used to interpolate strings in Swift?",
+              "options": ["\\$", "#{}", "\\()", "$()"],
+              "answer": "\\()",
+              "correct": null
+            },
+            {
+              "id": "mcq-21",
+              "question": "Which operator is used for nil coalescing in Swift?",
+              "options": ["??", "||", "?:", "!"],
+              "answer": "??",
+              "correct": null
+            },
+            {
+              "id": "mcq-22",
+              "question": "Which collection stores key-value pairs?",
+              "options": ["Array", "Set", "Tuple", "Dictionary"],
+              "answer": "Dictionary",
+              "correct": null
+            },
+            {
+              "id": "mcq-23",
+              "question": "What is 'optional chaining' in Swift?",
+              "options": [
+                "Changing the type of an optional",
+                "Calling properties/methods on optional that might be nil",
+                "Looping through optionals",
+                "Converting optional to array"
+              ],
+              "answer": "Calling properties/methods on optional that might be nil",
+              "correct": null
+            },
+            {
+              "id": "mcq-24",
+              "question": "What is the keyword for protocols in Swift?",
+              "options": ["interface", "protocol", "delegate", "contract"],
+              "answer": "protocol",
+              "correct": null
+            },
+            {
+              "id": "mcq-25",
+              "question": "Which iOS framework is primarily used with Swift for UI design?",
+              "options": ["UIKit", "AppKit", "CoreUI", "SwiftUI"],
+              "answer": "UIKit",
+              "correct": null
+            },
+              {
+                "id": "mcq-26",
+                "question": "What is the purpose of the 'defer' statement in Swift?",
+                "options": [
+                  "Exit early from a function",
+                  "Delay a task until background",
+                  "Execute code just before leaving the current scope",
+                  "Handle memory manually"
+                ],
+                "answer": "Execute code just before leaving the current scope",
+                "correct": null
+              },
+              {
+                "id": "mcq-27",
+                "question": "Which keyword makes a class or method available for subclassing outside the module?",
+                "options": ["open", "public", "internal", "dynamic"],
+                "answer": "open",
+                "correct": null
+              },
+              {
+                "id": "mcq-28",
+                "question": "Which of these is NOT a valid loop in Swift?",
+                "options": ["for-in", "repeat-while", "while", "loop"],
+                "answer": "loop",
+                "correct": null
+              },
+              {
+                "id": "mcq-29",
+                "question": "How do you define an enum in Swift?",
+                "options": [
+                  "enum Color {}",
+                  "enum Color[]",
+                  "enum = Color {}",
+                  "let enum Color"
+                ],
+                "answer": "enum Color {}",
+                "correct": null
+              },
+              {
+                "id": "mcq-30",
+                "question": "Which Swift feature allows values to change depending on conditions?",
+                "options": ["var", "let", "enum", "switch"],
+                "answer": "switch",
+                "correct": null
+              },
+              {
+                "id": "mcq-31",
+                "question": "What is the result type of 'Int(\"123\")'?",
+                "options": ["String", "Int", "Int?", "Optional"],
+                "answer": "Int?",
+                "correct": null
+              },
+              {
+                "id": "mcq-32",
+                "question": "What does the 'lazy' keyword mean?",
+                "options": [
+                  "Variable is global",
+                  "Variable is private",
+                  "Value is initialized only when accessed",
+                  "Value is re-evaluated every time"
+                ],
+                "answer": "Value is initialized only when accessed",
+                "correct": null
+              },
+              {
+                "id": "mcq-33",
+                "question": "What does the 'final' keyword do to a class or method?",
+                "options": [
+                  "Makes it optional",
+                  "Makes it private",
+                  "Prevents subclassing or overriding",
+                  "Makes it constant"
+                ],
+                "answer": "Prevents subclassing or overriding",
+                "correct": null
+              },
+              {
+                "id": "mcq-34",
+                "question": "How do you declare an empty dictionary in Swift?",
+                "options": [
+                  "var dict = [:]",
+                  "var dict = Dictionary()",
+                  "var dict: [String: Int] = [:]",
+                  "dict = {}"
+                ],
+                "answer": "var dict: [String: Int] = [:]",
+                "correct": null
+              },
+              {
+                "id": "mcq-35",
+                "question": "What keyword is used to define computed properties?",
+                "options": ["get", "set", "var", "computed"],
+                "answer": "var",
+                "correct": null
+              },
+              {
+                "id": "mcq-36",
+                "question": "Which symbol is used for range in Swift?",
+                "options": ["..", "..<", ":", "..."],
+                "answer": "..<",
+                "correct": null
+              },
+              {
+                "id": "mcq-37",
+                "question": "Which is a correct example of string interpolation in Swift?",
+                "options": [
+                  "\"Value is: $(value)\"",
+                  "\"Value is: #{value}\"",
+                  "\"Value is: (value)\"",
+                  "\"Value is: $value\""
+                ],
+                "answer": "\"Value is: \\(value)\"",
+                "correct": null
+              },
+              {
+                "id": "mcq-38",
+                "question": "Which of the following types are value types in Swift?",
+                "options": ["Class", "Struct", "Object", "Function"],
+                "answer": "Struct",
+                "correct": null
+              },
+              {
+                "id": "mcq-39",
+                "question": "Which modifier is used for dependency injection in SwiftUI?",
+                "options": [
+                  "@Inject",
+                  "@Binding",
+                  "@ObservedObject",
+                  "@Environment"
+                ],
+                "answer": "@Environment",
+                "correct": null
+              },
+              {
+                "id": "mcq-40",
+                "question": "What does 'nil' mean in Swift?",
+                "options": [
+                  "A runtime error",
+                  "A variable has no value",
+                  "A variable is zero",
+                  "The variable is infinite"
+                ],
+                "answer": "A variable has no value",
+                "correct": null
+              },
+              {
+                "id": "mcq-41",
+                "question": "Which operator is used to check equality in Swift?",
+                "options": ["=", "==", "===", "!"],
+                "answer": "==",
+                "correct": null
+              },
+              {
+                "id": "mcq-42",
+                "question": "How do you write a single-line comment in Swift?",
+                "options": [
+                  "// comment",
+                  "/* comment */",
+                  "# comment",
+                  "-- comment"
+                ],
+                "answer": "// comment",
+                "correct": null
+              },
+              {
+                "id": "mcq-43",
+                "question": "Which method is used to add an element to an array?",
+                "options": [".add()", ".push()", ".append()", ".insert()"],
+                "answer": ".append()",
+                "correct": null
+              },
+              {
+                "id": "mcq-44",
+                "question": "Which keyword is used to exit from a function and return a value?",
+                "options": ["stop", "end", "exit", "return"],
+                "answer": "return",
+                "correct": null
+              },
+              {
+                "id": "mcq-45",
+                "question": "What is the correct way to define a closure in Swift?",
+                "options": [
+                  "{ (a: Int, b: Int) -> Int in return a + b }",
+                  "[ (a: Int, b: Int): Int => a + b ]",
+                  "func(a, b) => a + b",
+                  "{ a + b }"
+                ],
+                "answer": "{ (a: Int, b: Int) -> Int in return a + b }",
+                "correct": null
+              },
+              {
+                "id": "mcq-46",
+                "question": "What does 'mutating' keyword do in Swift?",
+                "options": [
+                  "Modifies class values",
+                  "Allows struct method to modify properties",
+                  "Makes function final",
+                  "Marks the property as immutable"
+                ],
+                "answer": "Allows struct method to modify properties",
+                "correct": null
+              },
+              {
+                "id": "mcq-47",
+                "question": "Which keyword is used to mark an asynchronous function?",
+                "options": ["sync", "async", "await", "future"],
+                "answer": "async",
+                "correct": null
+              },
+              {
+                "id": "mcq-48",
+                "question": "Which of the following is used to handle asynchronous code in Swift?",
+                "options": ["DispatchQueue", "NSTimer", "RunLoop", "Timer"],
+                "answer": "DispatchQueue",
+                "correct": null
+              },
+              {
+                "id": "mcq-49",
+                "question": "How can you safely unwrap an optional using a single line?",
+                "options": ["guard let", "try?", "if let", "??"],
+                "answer": "??",
+                "correct": null
+              },
+              {
+                "id": "mcq-50",
+                "question": "Which keyword is used to stop a function from throwing an error?",
+                "options": ["do", "try!", "catch", "throws"],
+                "answer": "try!",
+                "correct": null
+              }
+            
+
+          ]
+
+        }
+      ]
     }
   ],
   "users": [
@@ -704,9 +1158,9 @@
         {
           "testId": "t-2",
           "date": "2025-07-10",
-          "score": 9,
-          "status": "submitted",
           "language": "Javascript",
+          "status": "submitted",
+          "score": 9,
           "selectedAnswers": [
             "36",
             "Nile",
@@ -724,7 +1178,69 @@
     }, 
     {
       "username":"abdul-rehman-bin-auf-R.A",
-      "password":"abdul"
+      "password":"abdul",
+      "testHistory":[
+        {
+          "testId": "t-4",
+          "date": "22/7/2025",
+          "language": "Swift",
+          "status" :"submitted",
+          "score": 11,
+          "selectedAnswers": [
+            "final",
+            "*",
+            "open",
+            "Tuple",
+            "raise/rescue",
+            "fn",
+            "String?",
+            "(Int, String)",
+            "echo()",
+            "Bool",
+            "Manual type declaration",
+            ".swift",
+            "extends",
+            "Void",
+            "Tuple",
+            "exit",
+            "do let",
+            "Auto Runtime Compiler",
+            "Looping",
+            "$()",
+            "?:",
+            "Set",
+            "Changing the type of an optional",
+            "contract",
+            "AppKit",
+            "Delay a task until background",
+            "internal",
+            "repeat-while",
+            "enum Color[]",
+            "enum",
+            "Int",
+            "Value is initialized only when accessed",
+            "Makes it private",
+            "var dict: [String: Int] = [:]",
+            "computed",
+            "..<",
+            "\"Value is: (value)\"",
+            "Function",
+            "@Binding",
+            "A variable is zero",
+            "==",
+            "// comment",
+            ".push()",
+            "stop",
+            "[ (a: Int, b: Int): Int => a + b ]",
+            "Modifies class values",
+            "future",
+            "NSTimer",
+            "if let",
+            "do"
+          ]
+
+        }
+      ]
     }
   ]
 }
