@@ -66,12 +66,12 @@ function TestSubmission({ correctAnswers}) {
                 </li>
               </>
           </ul>
-          { !submittingTest && <button
+           <button
             className="btn btn-outline-info w-100 mt-3"
             onClick={() => navigate('/')}
           >
             OK
-          </button>}
+          </button>
         </div>
       </div>
     </>
