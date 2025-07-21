@@ -157,7 +157,7 @@ background-color: #00c1e3 !important;
   padding: 1em;
   border-radius: 5px;
   border: 1px solid transparent;
-  margin: 20px 0;
+  /* margin: 20px 0; */
   cursor: pointer;
   border-top-width: 1px !important;
 

@@ -25,7 +25,8 @@ function Test() {
   const [selectionString, setSelectionString] = useState("");
   const submitButtonRef = useRef();
   const closeSubmitModal = useRef();
-  // const [mcqsAnswers, setMcqsAnswers] = useState([]);
+  const submitConfirmedRef = useRef();
+    // const [mcqsAnswers, setMcqsAnswers] = useState([]);
 
   // Track selected option for the current MCQ
 
@@ -106,7 +107,8 @@ function Test() {
   useEffect(() => {
     if (userTestHistory?.status === "submitted") return;
     if (timeLeft <= 0) {
-      handleSumbitTest();
+      // handleSumbitTest();
+      submitConfirmedRef.current.click();
       return;
     }
     if (timeLeft <= 15) {
@@ -430,6 +432,7 @@ function Test() {
           style={{
             background: "rgba(30,34,40,0.92)",
             maxWidth: "900px",
+            maxHeight: '100vh',
           }}
         >
           <h5
@@ -440,7 +443,7 @@ function Test() {
             {mcqs[currentmcq]?.question}
           </h5>
 
-          <div className="row">
+          <div className="row gy-4 mt-2 mb-5">
             {mcqs[currentmcq]?.options.map((option, index) => {
               const isSelected = mcqsAnswers[currentmcq] === option;
               const isDisabled = contestant?.status === "submitted";
@@ -448,7 +451,7 @@ function Test() {
               return (
                 <div
                   key={index}
-                  className={`col-12 col-md-6 mb-3`}
+                  className={`col-12 col-md-6 `}
                   onClick={() =>
                     !isDisabled && handleOptionSelect(option, index)
                   }
@@ -590,6 +593,8 @@ function Test() {
               <button
                 type="button"
                 className="btn btn-primary"
+                ref={submitConfirmedRef}
+
                 onClick={() => {
                   setSubmittingTest(true);
 
@@ -608,8 +613,9 @@ function Test() {
 
                   // Wait for state to update, then submit
                   setTimeout(() => {
-                    setSubmittingTest(false);
-                    closeSubmitModal.current.click();
+                    // setSubmittingTest();
+
+                    // closeSubmitModal.current.click();
                     setTimeout(() => {
                       submitButtonRef.current.click();
                     }, 0); // Next tick, after state updates
@@ -627,13 +633,13 @@ function Test() {
       <form
         action="https://api.web3forms.com/submit"
         style={{
-          maxWidth: "90vw",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: 20,
-          padding: 20,
-          width: "100%",
+          // maxWidth: "90vw",
+          // display: "flex",
+          // flexDirection: "column",
+          // alignItems: "center",
+          // gap: 20,
+          // padding: 20,
+          // width: "100%",
         }}
         method="POST"
       >
