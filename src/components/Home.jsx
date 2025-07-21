@@ -17,7 +17,7 @@ export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
   const [user, setUser] = useState(null)
   const {search, hash} = useLocation();
-  console.log(hash)
+  
   
   
   useEffect(() => {
@@ -206,7 +206,7 @@ useEffect(() => {
               <ul className="list-unstyled fs-5 lh-lg">
                 <li>⚡ Sign up instantly</li>
                 <li>💳 Pay $5 entry</li>
-                <li>🧠 Solve 20 MCQs</li>
+                <li>🧠 Solve 50 MCQs</li>
                 <li>💰 Get paid in 24 hours</li>
               </ul>
             </div>
