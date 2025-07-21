@@ -39,7 +39,7 @@ export default function ContestantLogin() {
     e.preventDefault();
 
     if (password.length > 0 && user.password === password) {
-      window.open(`/${contestantName}/performance?pass=${password}`);
+      navigate(`/${contestantName}/performance?pass=${password}`);
     } else {
       setError("Invalid password");
     }
