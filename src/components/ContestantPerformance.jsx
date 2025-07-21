@@ -18,19 +18,18 @@ export default function ContestantPerformance() {
   const { contestantName } = useParams();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const {search} = useLocation();
+  const { search } = useLocation();
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const [viewPostHeight, setViewPortHeight] = useState(window.innerHeight);
   const [viewPortWidth, setViewPortWidth] = useState(window.innerWidth);
   const [isMobile, setIsMobile] = useState(false);
-  const [sortValue, setSortValue] = useState('oldestToLatest');
+  const [sortValue, setSortValue] = useState("oldestToLatest");
   useEffect(() => {
     if (viewPortWidth < 768) {
       setIsMobile(true);
     }
   }, []);
-  
 
   // useEffect(() => {
   //   const params = new URLSearchParams(search);
@@ -49,7 +48,7 @@ export default function ContestantPerformance() {
   //     const found = db.users.find((u) => u.username === contestantName);
   //     setUser(found);
   //     setLoading(false);
-      
+
   //   }, 500);
   // }, [contestantName]);
 
@@ -93,7 +92,12 @@ export default function ContestantPerformance() {
       </div>
     );
 
-    let userTestArrayReverse = sortValue === "latestToOldest" ? (user?.testHistory.slice().reverse() ) : sortValue === "oldestToLatest" ? ( user?.testHistory) : null;
+  let userTestArrayReverse =
+    sortValue === "latestToOldest"
+      ? user?.testHistory.slice().reverse()
+      : sortValue === "oldestToLatest"
+      ? user?.testHistory
+      : null;
 
   return (
     <>
@@ -141,8 +145,6 @@ export default function ContestantPerformance() {
 
         <button type="submit">Submit Form</button>
       </form> */}
-
-     
 
       {/* // <div className="container mt-5">
     //   <h2 className="mb-4">Performance: {user.username}</h2>
