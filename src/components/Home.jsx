@@ -329,7 +329,7 @@ useEffect(() => {
                   Tied scores = faster time wins
                 </li>
                 <li className="list-group-item">
-                  Payout via PayPal or Easypaisa
+                  Payout via PayPal, Easypaisa & others.
                 </li>
                 <li className="list-group-item">
                   Quiz auto-submits at timer end
