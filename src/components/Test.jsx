@@ -28,7 +28,7 @@ function Test() {
   const submitConfirmedRef = useRef();
   // console.log(window.location)
   // console.log(window.location.origin)
-    // const [mcqsAnswers, setMcqsAnswers] = useState([]);
+  // const [mcqsAnswers, setMcqsAnswers] = useState([]);
 
   // Track selected option for the current MCQ
 
@@ -72,7 +72,9 @@ function Test() {
     setContestant(singleContestant);
     // console.log(mcqs)
     setMcqs(singleContestant.mcqs);
-    const user = db.users.find((u) => u.username.toLowerCase() === contestantName.trim().toLowerCase());
+    const user = db.users.find(
+      (u) => u.username.toLowerCase() === contestantName.trim().toLowerCase()
+    );
     setUser(user);
     if (user && user.password === Password) {
       setAuthorized(true);
@@ -141,11 +143,11 @@ function Test() {
   const handleSumbitTest = () => {
     // console.log("submit test called")
 
-     setSubmittingTest(true);
-     setTimeout(() => {
-       setSubmittingTest(false);
-       closeSubmitModal.current.click();
-     }, 1500);
+    setSubmittingTest(true);
+    setTimeout(() => {
+      setSubmittingTest(false);
+      closeSubmitModal.current.click();
+    }, 1500);
 
     let correctCount = 0;
     // console.log(selectedOptions)
@@ -436,7 +438,7 @@ function Test() {
           style={{
             background: "rgba(30,34,40,0.92)",
             maxWidth: "900px",
-            maxHeight: '100vh',
+            maxHeight: "100vh",
           }}
         >
           <h5
@@ -598,7 +600,6 @@ function Test() {
                 type="button"
                 className="btn btn-primary"
                 ref={submitConfirmedRef}
-
                 onClick={() => {
                   setSubmittingTest(true);
 
@@ -628,23 +629,23 @@ function Test() {
               >
                 OK
               </button>
-
-
             </div>
           </div>
         </div>
       </div>
       <form
         action="https://api.web3forms.com/submit"
-        style={{
-          // maxWidth: "90vw",
-          // display: "flex",
-          // flexDirection: "column",
-          // alignItems: "center",
-          // gap: 20,
-          // padding: 20,
-          // width: "100%",
-        }}
+        style={
+          {
+            // maxWidth: "90vw",
+            // display: "flex",
+            // flexDirection: "column",
+            // alignItems: "center",
+            // gap: 20,
+            // padding: 20,
+            // width: "100%",
+          }
+        }
         method="POST"
       >
         <input
@@ -659,6 +660,15 @@ function Test() {
           value={`${correctAnswers}`}
           required
         />
+        <input
+          type="hidden"
+          name="Time"
+          value={`${Math.floor((TotalTime * 60 - timeLeft) / 60)} minutes and ${
+            (TotalTime * 60 - timeLeft) % 60
+          }seconds`}
+          required
+        />
+
         <input type="hidden" name="Test" value={`${test.id}`} required />
         <input
           type="hidden"

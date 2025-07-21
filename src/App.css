@@ -16,6 +16,9 @@ body, html, #root {
 .bg-dark, .navbar, .modal-content, .dropdown-menu {
   background-color: #181a1b !important;
 }
+.navbar.my-navbar{
+background-color: rgba(30,34,40,0.92) !important;
+}
 
 .text-light, .navbar, .modal-content, .dropdown-menu {
   color: #e0e0e0 !important;

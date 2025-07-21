@@ -68,16 +68,28 @@ useEffect(() => {
       }}
     >
       {/* Navbar */}
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm  rounded-5">
+      <nav
+        className="navbar navbar-expand-lg my-navbar shadow-sm  rounded-5"
+        nstyle={{ background: "rgba(30,34,40,0.92)" }}
+      >
         <div className="container-fluid px-4">
           <Link
             className="navbar-brand fw-bold fs-3"
             style={{ color: "#00d8ff", letterSpacing: "2px" }}
             to="/"
           >
-            <span style={{ fontWeight: 700 }}>TectonicStrike</span>
+            <img
+              src="/assets/fav-icon.png"
+              alt="tectonicquiz"
+              srcset=""
+              height={100}
+              style={{
+                margin: '0 20px'
+              }}
+            />
+            <span style={{ fontWeight: 700 }}>Tectonic Quiz</span>
           </Link>
-          <button
+          {/* <button
             className="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
@@ -87,8 +99,9 @@ useEffect(() => {
             aria-label="Toggle navigation"
           >
             <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarNav">
+          </button> */}
+          
+         {!isMobile && <div className="" id="">
             <ul className="navbar-nav ms-auto gap-2">
               <li className="nav-item">
                 <Link
@@ -101,14 +114,14 @@ useEffect(() => {
                 </Link>
               </li>
             </ul>
-          </div>
+          </div>}
         </div>
       </nav>
 
       {/* Main Content */}
       <div
         className={`text-center ${
-          isMobile ? "p-2" : "p-5"
+          isMobile ? "p-3" : "p-5"
         } rounded-4 w-100 mx-auto`}
         style={{
           background: "rgba(30,34,40,0.92)",
@@ -131,7 +144,7 @@ useEffect(() => {
           className="lead mb-5 fs-4 lh-lg"
           style={{ maxWidth: 650, margin: "0 auto", color: "#e0e0e0" }}
         >
-          <span className="fw-semibold">Welcome to TectonicStrike</span> — the
+          <span className="fw-semibold">Welcome to Tectonic Quiz</span> — the
           premier platform for developers to{" "}
           <span style={{ color: "#00ffa3" }}>earn real money</span> by
           showcasing their skills in MCQ-based coding tests.
@@ -185,13 +198,13 @@ useEffect(() => {
           <div className="col-md-5 col-sm-12">
             <div className="p-4 rounded-4 shadow-sm  h-100 border border-secondary-subtle">
               <h5 className="mb-3" style={{ color: "#33f1ff" }}>
-                🌟 Why TectonicStrike?
+                🌟 Why Tectonic Quiz?
               </h5>
               <ul className="list-unstyled fs-5 lh-lg">
                 <li>
                   💸 Win <strong>$20</strong> per quiz
                 </li>
-                <li>🚫 No fluff—just skill</li>
+                <li>🚫 No fluff/AD —just skill</li>
                 <li>📆 Weekly quizzes</li>
                 <li>✅ 100% fair and automated</li>
               </ul>
@@ -307,6 +320,9 @@ useEffect(() => {
                 <li className="list-group-item">$5 entry is non-refundable</li>
                 <li className="list-group-item">
                   No cheating or AI tools allowed
+                </li>
+                <li className="list-group-item">
+                  Any cheat = disqualification.
                 </li>
                 <li className="list-group-item">Fastest high score wins</li>
                 <li className="list-group-item">
