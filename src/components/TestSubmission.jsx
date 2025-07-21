@@ -51,9 +51,9 @@ function TestSubmission({ correctAnswers}) {
                       fontWeight: "bold",
                     }}
                   >
-                    &nbsp; Learn More
+                    &nbsp; Learn Compete
                   </span>
-                  &nbsp; so you can
+                  &nbsp; and
                   <span
                     style={{
                       color: "#00d8ff",
@@ -66,12 +66,12 @@ function TestSubmission({ correctAnswers}) {
                 </li>
               </>
           </ul>
-          {/* { !submittingTest && <button
+          { !submittingTest && <button
             className="btn btn-outline-info w-100 mt-3"
             onClick={() => navigate('/')}
           >
-            Close
-          </button>} */}
+            OK
+          </button>}
         </div>
       </div>
     </>
