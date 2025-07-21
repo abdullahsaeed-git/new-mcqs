@@ -61,7 +61,7 @@ useEffect(() => {
 
   return (
     <div
-      className="min-vh-100 bg-dark text-light  rounded-5"
+      className="min-vh-100 bg-dark text-light  "
       style={{
         background:
           "radial-gradient(ellipse at top left, #232526 60%, #0f2027 100%)",
@@ -122,7 +122,7 @@ useEffect(() => {
       <div
         className={`text-center ${
           isMobile ? "p-3" : "p-5"
-        } rounded-4 w-100 mx-auto`}
+        }  w-100 mx-auto`}
         style={{
           background: "rgba(30,34,40,0.92)",
           maxWidth: "100%",
