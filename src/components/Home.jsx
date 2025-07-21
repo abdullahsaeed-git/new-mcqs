@@ -49,7 +49,8 @@ useEffect(() => {
       // console.log(user, userName);
       setError("User Not Found");
     } else {
-      navigate(`/${userName}/`);
+      const lowercaseUserName = userName.trim().toLowerCase();
+      navigate(`/${lowercaseUserName}/`);
     }
   };
 

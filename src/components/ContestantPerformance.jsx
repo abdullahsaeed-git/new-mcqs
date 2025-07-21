@@ -69,7 +69,9 @@ export default function ContestantPerformance() {
   useEffect(() => {
     if (!db) return;
 
-    const found = db.users.find((u) => u.username === contestantName);
+    const found = db.users.find(
+      (u) => u.username.toLowerCase() === contestantName.trim().toLowerCase()
+    );
     setUser(found);
     setLoading(false);
   }, [db, contestantName]);

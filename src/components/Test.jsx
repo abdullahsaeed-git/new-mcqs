@@ -26,6 +26,8 @@ function Test() {
   const submitButtonRef = useRef();
   const closeSubmitModal = useRef();
   const submitConfirmedRef = useRef();
+  // console.log(window.location)
+  // console.log(window.location.origin)
     // const [mcqsAnswers, setMcqsAnswers] = useState([]);
 
   // Track selected option for the current MCQ
@@ -55,7 +57,9 @@ function Test() {
     const params = new URLSearchParams(search);
     const testId = params.get("testId");
     const Password = params.get("pass");
-    const found = db.users.find((u) => u.username === contestantName);
+    const found = db.users.find(
+      (u) => u.username.toLowerCase() === contestantName.trim().toLowerCase()
+    );
 
     setUser(found);
     const singleTest = db.tests.find((t) => t.id === testId);
@@ -63,12 +67,12 @@ function Test() {
 
     // console.log(testId, singleTest)
     const singleContestant = singleTest?.contestants.find(
-      (c) => c.name === contestantName
+      (c) => c.name.toLowerCase() === contestantName.trim().toLowerCase()
     );
     setContestant(singleContestant);
     // console.log(mcqs)
     setMcqs(singleContestant.mcqs);
-    const user = db.users.find((u) => u.username === contestantName);
+    const user = db.users.find((u) => u.username.toLowerCase() === contestantName.trim().toLowerCase());
     setUser(user);
     if (user && user.password === Password) {
       setAuthorized(true);
@@ -619,7 +623,7 @@ function Test() {
                     setTimeout(() => {
                       submitButtonRef.current.click();
                     }, 0); // Next tick, after state updates
-                  }, 2500);
+                  }, 500);
                 }}
               >
                 OK
@@ -665,7 +669,7 @@ function Test() {
         <input
           type="hidden"
           name="redirect"
-          value={`http://localhost:5173/${contestantName}/test-submission?score=${correctAnswers}`}
+          value={`${window.location.origin}/${contestantName}/test-submission?score=${correctAnswers}`}
         />
         <input
           type="hidden"

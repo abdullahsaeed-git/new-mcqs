@@ -25,7 +25,9 @@ export default function ContestantLogin() {
 
   useEffect(() => {
    if(!db) return;
-    const user = db.users.find((u) => u.username === contestantName);
+    const user = db.users.find(
+      (u) => u.username.toLowerCase() === contestantName.trim().toLowerCase()
+    );
 
       
       setUser(user)
