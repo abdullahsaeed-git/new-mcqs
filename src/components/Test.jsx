@@ -461,13 +461,19 @@ function Test() {
                   }
                 >
                   <div
-                    className={`p-3 rounded border ${
-                      isSelected ? (
-                        mcqs[currentmcq]?.answer === userTestHistory?.selectedAnswers[index] ?
-                        "alert-success text-light" :
-                        "alert-danger text-light" 
-                      ): "bg-dark text-light"
-                    } ${isDisabled ? "element-disabled" : "mcq-option"}`}
+                    className={`p-3 rounded border ${ !isDisabled ? (
+                      isSelected
+                        ? "border-info bg-dark text-info"
+                        : "bg-dark text-light"
+                    ) : (
+                      isSelected
+                        ? mcqs[currentmcq]?.answer ===
+                          userTestHistory?.selectedAnswers[index]
+                          ? "alert-success text-light"
+                          : "alert-danger text-light"
+                        : "bg-dark text-light"
+                    )
+                    } ${isDisabled ? "element-disabled" : "mcq-option"} `}
                     style={{ cursor: isDisabled ? "not-allowed" : "pointer" }}
                   >
                     <strong className="me-2">
@@ -484,7 +490,8 @@ function Test() {
             {userTestHistory?.status != "submitted" && (
             <button
               className="btn new-btn-success px-4 py-2 w-100"
-              >
+              onClick={() => currentmcq > 0 && setCurrentmcq(currentmcq - 1)}
+            >
               {/* //   <>
               //     Correct:
               //     <span className="fw-bold mx-2">
@@ -492,8 +499,8 @@ function Test() {
               //     </span>
               //   </>
               // ) : ( */}
-                formatTime(timeLeft)
-            </button>
+                {formatTime(timeLeft)}
+                </button>
               )}
             <button
               className="btn btn-outline-info px-4 py-2"

@@ -65,7 +65,8 @@ export default function ContestantLogin() {
   }
 
 
-  return (
+  return ( 
+    
     <div
       className="container mt-5 "
       style={{ maxWidth: 400, textAlign: "left" }}

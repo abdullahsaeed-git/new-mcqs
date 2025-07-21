@@ -1,4 +1,4 @@
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import Loading from "./Loading";
 import { useState, useEffect } from "react";
 
@@ -101,6 +101,7 @@ export default function ContestantPerformance() {
 
   return (
     <>
+       
       {/* <form
         action="https://api.web3forms.com/submit"
         className=""
@@ -228,7 +229,8 @@ export default function ContestantPerformance() {
 
       <div className="container mt-5">
         <h2 className="mb-4 text-white">
-          Performance: {isMobile && <br />} <span className="fs-4 mt-3"> {user.username}</span>
+          Performance: {isMobile && <br />}{" "}
+          <span className="fs-4 mt-3"> {user.username}</span>
         </h2>
         {isMobile && userTestArrayReverse.length != 0 && (
           <div
