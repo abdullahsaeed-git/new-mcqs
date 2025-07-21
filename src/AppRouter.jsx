@@ -8,6 +8,7 @@ import TestDetails from "./components/TestDetails";
 import ContestantPerformance from "./components/ContestantPerformance";
 import ErrorBoundary from "./components/ErrorBoundary";
 import Test from "./components/Test";
+import TestSubmission from "./components/TestSubmission";
 
 export default function AppRouter() {
   return (
@@ -20,7 +21,7 @@ export default function AppRouter() {
           <Route path="/test-details" element={<TestDetails />} />
           <Route path=":contestantName/test" element={<Test />}/>
           <Route path=":contestantName" element={<ContestantLogin />} />
-          <Route path=":contestantName/test" element={<TestDetails />} />
+          <Route path=":contestantName/test-submission" element={<TestSubmission />} />
           <Route
             path=":contestantName/performance"
             element={<ContestantPerformance />}

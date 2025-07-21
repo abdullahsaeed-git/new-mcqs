@@ -1,7 +1,13 @@
 import React from "react";
 import Loading from "./Loading";
+import { useLocation, useParams } from "react-router-dom";
+function TestSubmission({ correctAnswers}) {
 
-function TestSubmission({submittingTest, correctAnswers}) {
+    const {contestantName} = useParams();
+
+    const {search} = useLocation();
+    const params  = new URLSearchParams(search)
+    const score = params.get("score")
   return (
     <>
       <div
@@ -16,7 +22,7 @@ function TestSubmission({submittingTest, correctAnswers}) {
             className="h3 my-2 mx-1 text-center mb-4 "
             style={{ color: "#00d8ff" }}
           >
-            {submittingTest ? "Test Submission" : "Congratulations!!"}
+            Congratulations!! "{contestantName}"
           </h1>
           <ul
             style={{
@@ -27,20 +33,9 @@ function TestSubmission({submittingTest, correctAnswers}) {
             }}
             className="list-group list-group-flush "
           >
-            {submittingTest ? (
-              <>
-                <li className="list-group-item h4">
-                  <Loading />
-                </li>
-                <li className="list-group-item h4">
-                  Your Test is getting submitted.
-                </li>
-                <li className="list-group-item h6">Please Wait...</li>
-              </>
-            ) : (
               <>
                 <li className="list-group-item h4 text-center">
-                  You have got {correctAnswers} Answers accurate.
+                  You have got {score} Answers accurate.
                 </li>
                 <li className="list-group-item h6">
                   Rewards Wil be announced within 24 hours.
@@ -70,7 +65,6 @@ function TestSubmission({submittingTest, correctAnswers}) {
                   </span>
                 </li>
               </>
-            )}
           </ul>
           {/* { !submittingTest && <button
             className="btn btn-outline-info w-100 mt-3"

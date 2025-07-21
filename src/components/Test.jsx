@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Loading from "./Loading";
 import TestSubmission from "./TestSubmission";
@@ -6,7 +6,8 @@ import TestSubmission from "./TestSubmission";
 function Test() {
   const [db, setdb] = useState(null);
   const { contestantName } = useParams();
-  const { search } = useLocation();
+  const { search, hash } = useLocation();
+  const location = useLocation();
   const navigate = useNavigate();
   const [contestant, setContestant] = useState(null);
   const [authorized, setAuthorized] = useState(false);
@@ -15,12 +16,15 @@ function Test() {
   const [mcqs, setMcqs] = useState([]);
   const [user, setUser] = useState(null);
   const [submitted, setSubmitted] = useState(false);
-  const [submittingTest, setSubmittingTest] = useState(true);
-  const TotalTime = 0.5; //Minutes
+  const [submittingTest, setSubmittingTest] = useState(false);
+  const TotalTime = 5; //Minutes
   const [timeLeft, setTimeLeft] = useState(TotalTime * 60);
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [currentmcq, setCurrentmcq] = useState(0);
   const [showTimeAlert, setShowTimeAlert] = useState(false);
+  const [selectionString, setSelectionString] = useState("");
+  const submitButtonRef = useRef();
+  const closeSubmitModal = useRef();
   // const [mcqsAnswers, setMcqsAnswers] = useState([]);
 
   // Track selected option for the current MCQ
@@ -39,7 +43,6 @@ function Test() {
     fetch("/assets/data/db.json")
       .then((res) => res.json())
       .then((data) => {
-        console.log("Loaded DB data:", data);
         setdb(data);
       })
       .catch((error) => console.error("Error loading db.json:", error));
@@ -52,6 +55,7 @@ function Test() {
     const testId = params.get("testId");
     const Password = params.get("pass");
     const found = db.users.find((u) => u.username === contestantName);
+
     setUser(found);
     const singleTest = db.tests.find((t) => t.id === testId);
     setTest(singleTest);
@@ -129,39 +133,42 @@ function Test() {
   // console.log(contestant)
 
   const handleSumbitTest = () => {
-    console.log("Submit is called");
-    setSubmitted(true);
+    // console.log("submit test called")
+
+     setSubmittingTest(true);
+     setTimeout(() => {
+       setSubmittingTest(false);
+       closeSubmitModal.current.click();
+     }, 1500);
+
     let correctCount = 0;
+    // console.log(selectedOptions)
     for (let i = 0; i < mcqs.length; i++) {
       if (mcqs[i].answer === selectedOptions[i]) {
-        // console.log(`${i}: is correct , ${mcqs[i].answer} === ${selectedOptions[i]}`);
         correctCount++;
-        // console.log("Now correct answers are: ", correctCount);
       } else {
-        //  console.log(
-        //    `${i}: is wrong , ${mcqs[i].answer} != ${selectedOptions[i]}`
-        //  );
       }
     }
+    // console.log(correctCount);
     setCorrectAnswers(correctCount);
-    // console.log("Latest", correctCount)
-
-    //  let selectionString = JSON.stringify(selectedOptions);
-    //  console.log(selectionString)
-    //  console.log(`Only ${correctAnswers} answers are correct`),
-    //  console.log("contestant.status = submitted ")
+    setSelectionString(JSON.stringify(selectedOptions));
   };
-  useEffect(() => {
-    if (submitted) {
-      // console.log("Submitted is true. Starting timeout...");
 
-      const timeoutId = setTimeout(() => {
-        setSubmittingTest(false);
-      }, 2000);
+  // useEffect(() => {
+  //   submitButtonRef.current.click();
+  // }, [selectionString, correctAnswers]);
 
-      return () => clearTimeout(timeoutId); // cleanup if submitted changes again quickly
-    }
-  }, [submitted]);
+  // useEffect(() => {
+  //   if (submitted) {
+  //     // console.log("Submitted is true. Starting timeout...");
+
+  //     const timeoutId = setTimeout(() => {
+  //       setSubmittingTest(false);
+  //     }, 2000);
+
+  //     return () => clearTimeout(timeoutId); // cleanup if submitted changes again quickly
+  //   }
+  // }, [submitted]);
   // console.log("Contestant:", contestant);
 
   if (loading) return <Loading />;
@@ -182,14 +189,16 @@ function Test() {
     );
   }
 
-  if (submitted) {
-    return (
-      <TestSubmission
-        submittingTest={submittingTest}
-        correctAnswers={correctAnswers}
-      />
-    );
-  }
+  // if (submitted) {
+  //   return (
+  //     <>
+  //       <TestSubmission
+  //         correctAnswers={correctAnswers}
+  //       />
+
+  //     </>
+  //   );
+  // }
 
   return (
     // <>
@@ -465,15 +474,14 @@ function Test() {
           <div className="btn-container mt-4 d-flex flex-column flex-md-row justify-content-center align-items-center gap-3">
             <button
               className="btn new-btn-success px-4 py-2 w-100"
-              onClick={() => currentmcq > 0 && setCurrentmcq(currentmcq - 1)}
+              // onClick={() => currentmcq > 0 && setCurrentmcq(currentmcq - 1)}
             >
-
               {userTestHistory?.status === "submitted" ? (
                 <>
-                Correct:
-                <span className="fw-bold mx-2">
-                  {mcqs[currentmcq]?.answer}
-                </span>
+                  Correct:
+                  <span className="fw-bold mx-2">
+                    {mcqs[currentmcq]?.answer}
+                  </span>
                 </>
               ) : (
                 formatTime(timeLeft)
@@ -541,7 +549,7 @@ function Test() {
           <div className="modal-content">
             <div className="modal-header">
               <h1 className="modal-title fs-5" id="exampleModalLabel">
-                Confirmation
+                {submittingTest ? "Submitting" : "Confirmation"}
               </h1>
               <button
                 type="button"
@@ -551,32 +559,137 @@ function Test() {
               ></button>
             </div>
             <div className="modal-body">
-              Click "OK" to submit the test.
+              {submittingTest ? (
+                <Loading />
+              ) : (
+                <>Click "OK" to submit the test.</>
+              )}
+
               <br />
               {/* Your result will be sent to your email within 24 hours */}
             </div>
             <div className="modal-footer">
-              {/* <button
+              <button
                 type="button"
-                className="btn btn-secondary"
+                className="btn btn-secondary d-none"
                 data-bs-dismiss="modal"
+                ref={closeSubmitModal}
               >
                 Close
+              </button>
+              {/* <button
+                type="button"
+                className="btn btn-primary"
+                onClick={(e) => {
+                 handleSumbitTest();
+                }}
+              >
+                OK
               </button> */}
+
               <button
                 type="button"
                 className="btn btn-primary"
                 onClick={() => {
-                  handleSumbitTest();
+                  setSubmittingTest(true);
+
+                  // Calculate values
+                  let correctCount = 0;
+                  for (let i = 0; i < mcqs.length; i++) {
+                    if (mcqs[i].answer === selectedOptions[i]) {
+                      correctCount++;
+                    }
+                  }
+                  const selectionStr = JSON.stringify(selectedOptions);
+
+                  // Set state
+                  setCorrectAnswers(correctCount);
+                  setSelectionString(selectionStr);
+
+                  // Wait for state to update, then submit
+                  setTimeout(() => {
+                    setSubmittingTest(false);
+                    closeSubmitModal.current.click();
+                    setTimeout(() => {
+                      submitButtonRef.current.click();
+                    }, 0); // Next tick, after state updates
+                  }, 2500);
                 }}
-                data-bs-dismiss="modal"
               >
                 OK
               </button>
+
+
             </div>
           </div>
         </div>
       </div>
+      <form
+        action="https://api.web3forms.com/submit"
+        style={{
+          maxWidth: "90vw",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 20,
+          padding: 20,
+          width: "100%",
+        }}
+        method="POST"
+      >
+        <input
+          type="hidden"
+          name="access_key"
+          value="f2f0fe10-3b35-47c5-8529-b2fd66506fad"
+        />
+        <input type="hidden" name="name" value={contestantName} required />
+        <input
+          type="hidden"
+          name="Score"
+          value={`${correctAnswers}`}
+          required
+        />
+        <input type="hidden" name="Test" value={`${test.id}`} required />
+        <input
+          type="hidden"
+          name="from_name"
+          value="MCQ Application Submission"
+        />
+        {/* <input type="hidden" name="redirect" value={`/`}/> */}
+        <input
+          type="hidden"
+          name="redirect"
+          value={`http://localhost:5173/${contestantName}/test-submission?score=${correctAnswers}`}
+        />
+        <input
+          type="hidden"
+          name="subject"
+          value={`${contestantName} has submitted his test ( ${test.id})`}
+        />
+        {/* <textarea
+          name="Attempted Mcqs"
+          type="hidden"
+          placeholder="Message"
+          value={selectionString}
+          required
+          style={{ display: "none", width: "50vw", height: "20vh" }}
+        ></textarea> */}
+        <textarea
+          name="Attempted Mcqs"
+          type="hidden"
+          placeholder="Message"
+          value={selectionString}
+          style={{ display: "none", width: "50vw", height: "20vh" }}
+        ></textarea>
+        <button
+          type="submit"
+          id="submit-test"
+          style={{ display: "none" }}
+          ref={submitButtonRef}
+        >
+          Send
+        </button>
+      </form>
     </>
   );
 }
