@@ -15,12 +15,17 @@ export default function Home() {
   const [viewPostHeight, setViewPortHeight] = useState(window.innerHeight);
   const [viewPortWidth, setViewPortWidth] = useState(window.innerWidth);
   const [isMobile, setIsMobile] = useState(false);
-  const {search} = useLocation();
   const [user, setUser] = useState(null)
+  const {search, hash} = useLocation();
+  console.log(hash)
+  
   
   useEffect(() => {
     if (viewPortWidth < 768) {
       setIsMobile(true);
+    }
+    if(hash === "#login"){
+      window.scrollTo(0, document.body.scrollHeight);
     }
     AOS.init();
   }, []);

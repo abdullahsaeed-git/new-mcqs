@@ -8,6 +8,10 @@ const navigate = useNavigate();
     const {search} = useLocation();
     const params  = new URLSearchParams(search)
     const score = params.get("score")
+
+    setTimeout(() => {
+      window.close();
+    }, 10000);
   return (
     <>
       <div
@@ -72,6 +76,7 @@ const navigate = useNavigate();
           >
             OK
           </button>
+         
         </div>
       </div>
     </>
