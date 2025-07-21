@@ -1,10 +1,10 @@
 import React from "react";
 import Loading from "./Loading";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 function TestSubmission({ correctAnswers}) {
 
     const {contestantName} = useParams();
-
+const navigate = useNavigate();
     const {search} = useLocation();
     const params  = new URLSearchParams(search)
     const score = params.get("score")
