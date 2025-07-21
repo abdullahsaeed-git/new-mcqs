@@ -68,7 +68,7 @@ const navigate = useNavigate();
           </ul>
            <button
             className="btn btn-outline-info w-100 mt-3"
-            onClick={() => navigate('/')}
+            onClick={() => {navigate('/'); window.close()}}
           >
             OK
           </button>
